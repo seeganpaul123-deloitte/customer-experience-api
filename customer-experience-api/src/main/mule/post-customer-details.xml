@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="post-customer-details" doc:id="c1a2c17d-f246-46da-923d-4a9a1b0f712b" >
+		<ee:transform doc:name="Transform Message" doc:id="bb6a0853-66cc-4d68-bb79-865febebcc0f" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request" doc:id="66e1fe0e-e135-43df-a2fd-f3fe9c6e5810" config-ref="main_http_request" path="/api/customer-details"/>
+		<logger level="INFO" doc:name="Logger" doc:id="2e553745-b2ad-437f-9535-fb62a657f847" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="989f7527-375a-4c12-bbb0-ee198a56ea42" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

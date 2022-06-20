@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="get-loan-status" doc:id="3bb50a22-2e02-4e07-b8d0-49c316a8d0a9" >
+		<set-variable value="#[attributes.uriParams.userid as Number]" doc:name="UserId" doc:id="39640d1e-670d-4046-8df6-dcb2a00927c5" variableName="UserId"/>
+		<http:request method="GET" doc:name="Request" doc:id="007f3d56-1a80-4144-b413-59369b35528f" config-ref="main_http_request" path="/api/loan-status/{UserId}">
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"UserId" : vars.UserId
+}]]]></http:uri-params>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="4c68eccd-d50c-4f46-9446-b0a62157fb69" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
