@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="post-apply-loan" doc:id="b16fbfe2-3083-46dc-940e-1295c888baa0" >
+		<ee:transform doc:name="Transform Message" doc:id="d9001e5a-e2ce-4e2a-918b-9e1251c077cf" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "USER_ID": payload.USER_ID,
+  "Email": payload.Email,
+  "Loan_Amount": payload.Loan_Amount,
+  "Tenure": payload.Tenure,
+  "Interest": payload.Interset,
+  "Type": payload.Type
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request" doc:id="37fe17f1-05a9-4c32-9c64-6a1cf4c90129" config-ref="main_http_request" path="/api/loan-details"/>
+		<logger level="INFO" doc:name="Logger" doc:id="dfd0d536-fdef-4935-a010-6411fab03fd3" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="083d8599-0bce-4788-ab2e-7f4cd575d3e2">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
