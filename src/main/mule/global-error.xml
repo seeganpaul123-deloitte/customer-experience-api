@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<configuration doc:name="Configuration" doc:id="81b135ec-c206-4827-9868-c1d9889e2cf1" defaultErrorHandler-ref="global-errorError_Handler" />
+	<error-handler name="global-errorError_Handler" doc:id="71ff37d6-7e21-409d-9e82-5f3bb1c5296b" >
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="da7ab345-f216-4bc7-a095-c9af503187e3" type="APIKIT:BAD_REQUEST" >
+			<ee:transform doc:name="Transform Message" doc:id="6b1ed057-e73b-445b-91cf-cc56757058ba" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{message: error.description}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[400]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="053348a7-1596-4df7-a10c-f1336ddeb601" type="APIKIT:NOT_FOUND" >
+			<ee:transform doc:name="Transform Message" doc:id="3a752457-c7bc-403d-b9a3-1b3f75c9de20" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{message: error.description}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[404]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="39926539-a91a-4669-b956-a2bce4d9af93" type="APIKIT:METHOD_NOT_ALLOWED" >
+			<ee:transform doc:name="Transform Message" doc:id="641cb332-5fda-4b38-bd01-b22c67c8c543" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{message: error.description}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[405]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="dbc23b3a-695f-40cc-a80d-eef5c45c9398" type="APIKIT:NOT_ACCEPTABLE" >
+			<ee:transform doc:name="Transform Message" doc:id="2624cf9f-edc5-493e-a62e-b0ea08c93dc8" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{message: error.description}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[406]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="becd142e-dab4-4101-a6e9-2b4e4d6be48c" type="APIKIT:UNSUPPORTED_MEDIA_TYPE" >
+			<ee:transform doc:name="Transform Message" doc:id="7d63b536-8229-47b8-8288-68dda369dd8e" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{message: error.description}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[415]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="Error Propagate" doc:id="b6bf8db7-0d51-41cb-bf02-87127c23b00f" type="APIKIT:NOT_IMPLEMENTED" >
+			<ee:transform doc:name="Transform Message" doc:id="6b98ed86-b02c-4e2f-8e47-7b44231c2d9f" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{message: error.description}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[501]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+	</error-handler>
+</mule>

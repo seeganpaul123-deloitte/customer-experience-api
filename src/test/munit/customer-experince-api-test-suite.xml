@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="customer-experince-api-test-suite.xml" />
+	<munit:test name="customer-experince-api-test-suite-get:\loanstatus\(userid):customer-experince-api-configTest" doc:id="3537b0a5-14e1-41c8-aa39-f09f04c163d7" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="7372d5cf-4499-475f-b8c0-1be9ffd37d10" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="007f3d56-1a80-4144-b413-59369b35528f" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[MunitTools::getResourceAsString('get-loan-status/loan-status.json')]" mediaType="application/json" encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="acd10fd8-4b3e-4ce1-abda-b8718f829732" >
+				<munit:attributes value='#[{uriParams:{"userid": 1}}]' />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to get:\loanstatus\(userid):customer-experince-api-config" doc:id="df6bccc6-f5ac-4897-af2a-f2396f37c21d" name="get:\loanstatus\(userid):customer-experince-api-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="ce2018c2-06a8-4663-aafd-e05c7ded7414" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="customer-experince-api-test-suite-post:\Customer-Registration:application\json:customer-experince-api-configTest" doc:id="98f57be8-e388-427f-9158-01e45b5cc729" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="6f6e2945-fb93-49d8-9873-c6c77e283b8b" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="66e1fe0e-e135-43df-a2fd-f3fe9c6e5810" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to post:\Customer-Registration:application\json:customer-experince-api-config" doc:id="8eb44c11-f3fa-49b0-b2ca-f5ce184f68b1" name="post:\Customer-Registration:application\json:customer-experince-api-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="a0a9d66d-12e9-4138-adea-0a5ce3cf5e1b" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="customer-experince-api-test-suite-post:\apply-loan:application\json:customer-experince-api-configTest" doc:id="eea274d9-bcb8-4b53-970e-6a130d6762f0" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="d5d47cb8-cde8-489f-b361-8bcd387e7aab" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="37fe17f1-05a9-4c32-9c64-6a1cf4c90129" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[MunitTools::getResourceAsString('post-loan-details/loan-details.json')]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="1b426145-0ba2-4546-b9f8-fc747eb53d5b" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://post-loan-details/loan-details.json')]" encoding="UTF-8" mediaType="application/json" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\apply-loan:application\json:customer-experince-api-config" doc:id="848e8ce6-5be1-451a-89cd-0169de11baec" name="post:\apply-loan:application\json:customer-experince-api-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="8995b8ff-d33d-4b85-b476-a68af89ece84" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
