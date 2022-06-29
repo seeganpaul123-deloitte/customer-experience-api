@@ -84,5 +84,20 @@ output application/json
 				</ee:variables>
 			</ee:transform>
 		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="afde5f3e-ea0a-46b5-9a54-5b10d96aca0a" type="HTTP:NOT_FOUND">
+			<ee:transform doc:name="Transform Message" doc:id="ef3b8c66-2853-43bf-9b4f-1b36036c18a2" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message: "loan status of the customer is not availabe or the customer is not registered"
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[404]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
 	</error-handler>
 </mule>
