@@ -1,0 +1,12 @@
+%dw 2.0
+
+type auto_b16fbfe2_3083_46dc_940e_1295c888baa0_Input_Payload = {
+  Tenure: Number, 
+  Type: String, 
+  Email: String, 
+  USER_ID: Number, 
+  Loan_Amount: Number, 
+  Interset: Number, 
+  _?: Any
+}
+
