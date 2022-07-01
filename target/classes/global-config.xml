@@ -8,6 +8,6 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 		<http:listener-connection host="0.0.0.0" port="8081"/>
 	</http:listener-config>
 	<http:request-config name="main_http_request" doc:name="HTTP Request configuration" doc:id="be122641-0785-4f05-82ab-8ada2c783228" responseTimeout="30000">
-		<http:request-connection host="mule-app-customer-system-api-github.us-e2.cloudhub.io"/>
+		<http:request-connection host="mule-app-customer-system-api-github.us-e2.cloudhub.io" port="8081"/>
 	</http:request-config>
 </mule>
